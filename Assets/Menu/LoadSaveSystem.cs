@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public static class LoadSaveSystem
+public class LoadSaveSystem : MonoBehaviour
 {
     public static void Save(string score)
     {

@@ -21,8 +21,8 @@ public class Astronaut : MonoBehaviour
     public GameObject another;
 
     void Start()
-    {   
-        element.transform.position = new Vector2((float)GetRandomNumber(-2.3, 2.3), 3f);
+    {
+        SetElementPosition();
         healthText.text = ScoreAndHealth.GetComponent<ScoreAndHealth>().health.ToString();
         endGameDialog.SetActive(false);
     }
@@ -53,8 +53,10 @@ public class Astronaut : MonoBehaviour
                 speed -= 0.5f;
                 another.GetComponent<Astronaut>().speed -= 0.5f;
             }
-            element.transform.position = new Vector2((float)GetRandomNumber(-2.3, 2.3), 5.52f);
-        } else if (name == "rock" && other.name == "Ship") {
+            SetElementPosition();
+        } 
+        else if (name == "rock" && other.name == "Ship") 
+        {
             int tmp = int.Parse(health) - 1;
             ScoreAndHealth.GetComponent<ScoreAndHealth>().health = tmp.ToString();
             healthText.text = tmp.ToString();
@@ -63,10 +65,11 @@ public class Astronaut : MonoBehaviour
             {
                 ShowEndGameDialog();
             }
-            element.transform.position = new Vector2((float)GetRandomNumber(-2.3, 2.3), 5.52f);
-        } else if (other.name == "BottomBorder")
+            SetElementPosition();
+        }
+        else if (other.name == "BottomBorder")
         {
-            element.transform.position = new Vector2((float)GetRandomNumber(-2.3, 2.3), 5.52f);
+            SetElementPosition();
         }
     }
 
@@ -82,5 +85,15 @@ public class Astronaut : MonoBehaviour
         {
             LoadSaveSystem.Save(scoreTmp);
         }
+    }
+
+    private void SetElementPosition()
+    {
+        float tmpElementPosition = (float)GetRandomNumber(-2.3, 2.3);
+        while (tmpElementPosition >= another.transform.position.x - 0.6f && tmpElementPosition <= another.transform.position.x + 0.6f)
+        {
+            tmpElementPosition = (float)GetRandomNumber(-2.3, 2.3);
+        }
+        element.transform.position = new Vector2(tmpElementPosition, 5.52f);
     }
 }
